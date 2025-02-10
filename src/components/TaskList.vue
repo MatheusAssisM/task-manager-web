@@ -26,7 +26,9 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useTasksStore } from 'src/stores/tasks'
+import { useQuasar } from 'quasar'
 
+const $q = useQuasar()
 const tasksStore = useTasksStore()
 
 onMounted(async () => {
@@ -38,8 +40,21 @@ const toggleTask = (task) => {
   console.log('Toggle task:', task.id)
 }
 
-const deleteTask = (taskId) => {
-  // TODO: Implement API call
-  console.log('Delete task:', taskId)
+const deleteTask = async (taskId) => {
+  try {
+    await tasksStore.deleteTask(taskId)
+    $q.notify({
+      type: 'positive',
+      message: 'Task deleted successfully!',
+      position: 'top'
+    })
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: 'Error deleting task',
+      position: 'top'
+    })
+    console.error('Error deleting task:', error)
+  }
 }
 </script>

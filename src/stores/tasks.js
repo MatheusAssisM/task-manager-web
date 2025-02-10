@@ -16,6 +16,11 @@ export const useTasksStore = defineStore('tasks', {
     async fetchTasks() {
       const response = await api.get('/tasks/user/tasks')
       this.tasks = response.data
+    },
+
+    async deleteTask(taskId) {
+      await api.delete(`/tasks/${taskId}`)
+      this.tasks = this.tasks.filter(task => task.id !== taskId)
     }
   }
 })
