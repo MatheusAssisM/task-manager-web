@@ -32,6 +32,9 @@
         </q-item-section>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3e8f93b (Enhance task list layout by adjusting button alignment for edit and delete actions)
         <q-item-section side class="flex items-right">
           <q-btn flat round color="primary" icon="edit" @click="openEditDialog(task)" class="q-mr-sm" />
           <q-btn flat round color="negative" icon="delete" @click="deleteTask(task.id)" class="q-mr-sm" />
