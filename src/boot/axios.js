@@ -6,7 +6,8 @@ const api = axios.create({ baseURL: process.env.API_URL || 'http://localhost:800
 const publicPaths = [
   '/auth/login',
   '/auth/forgot-password',
-  '/auth/reset-password'
+  '/auth/reset-password',
+  '/auth/reset-password/'
 ]
 
 // Add request interceptor
