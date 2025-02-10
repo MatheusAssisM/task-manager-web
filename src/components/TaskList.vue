@@ -2,6 +2,7 @@
   <div class="task-list">
     <q-list separator>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <q-item v-for="task in tasksStore.tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
         <q-item-section side>
           <q-checkbox 
@@ -10,6 +11,9 @@
           />
 =======
       <q-item v-for="task in tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
+=======
+      <q-item v-for="task in tasksStore.tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
+>>>>>>> f09927c (Implement task management with add and fetch functionality, including validation and notifications)
         <q-item-section side>
           <q-checkbox v-model="task.completed" @update:model-value="toggleTask(task)" />
 >>>>>>> d520633 (Add task management components and layout updates)
@@ -48,6 +52,7 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { ref } from 'vue'
 <<<<<<< HEAD
 import EditTaskDialog from './EditTaskDialog.vue'
@@ -137,11 +142,16 @@ const deleteTask = async (taskId) => {
     console.error('Error deleting task:', error)
   }
 =======
+=======
+import { onMounted } from 'vue'
+import { useTasksStore } from 'src/stores/tasks'
+>>>>>>> f09927c (Implement task management with add and fetch functionality, including validation and notifications)
 
-const tasks = ref([
-  { id: 1, title: 'Complete project setup', description: 'Initial project configuration', completed: false },
-  { id: 2, title: 'Add authentication', description: 'Implement user login/logout', completed: true },
-])
+const tasksStore = useTasksStore()
+
+onMounted(async () => {
+  await tasksStore.fetchTasks()
+})
 
 const toggleTask = (task) => {
   // TODO: Implement API call

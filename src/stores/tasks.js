@@ -14,6 +14,7 @@ export const useTasksStore = defineStore('tasks', {
     },
 
     async fetchTasks() {
+<<<<<<< HEAD
       const response = await api.get('/tasks')
       this.tasks = response.data
     },
@@ -45,6 +46,10 @@ export const useTasksStore = defineStore('tasks', {
         this.tasks.splice(taskIndex, 1, updatedTaskData)
       }
       return response.data
+=======
+      const response = await api.get('/tasks/user/tasks')
+      this.tasks = response.data
+>>>>>>> f09927c (Implement task management with add and fetch functionality, including validation and notifications)
     }
   }
 })
