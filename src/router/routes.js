@@ -2,6 +2,7 @@ const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+    meta: { requiresAuth: true },
     children: [
       { 
         path: '', 
@@ -29,6 +30,13 @@ const routes = [
       }
     ]
   },
+<<<<<<< HEAD
+=======
+  {
+    path: '/login',
+    component: () => import('pages/LoginPage.vue')
+  },
+>>>>>>> e8d7a34 (Implement authentication flow with login page and API integration)
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')

@@ -6,6 +6,7 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { onMounted, ref } from 'vue'
 import { useAuthStore } from './stores/auth'
 
@@ -18,5 +19,14 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+=======
+import { onMounted } from 'vue'
+import { useAuthStore } from './stores/auth'
+
+const authStore = useAuthStore()
+
+onMounted(() => {
+  authStore.initializeAuth()
+>>>>>>> e8d7a34 (Implement authentication flow with login page and API integration)
 })
 </script>

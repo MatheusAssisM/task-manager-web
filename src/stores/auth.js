@@ -52,6 +52,7 @@ export const useAuthStore = defineStore('auth', {
       } else {
         delete api.defaults.headers.common['Authorization']
       }
+<<<<<<< HEAD
     },
 
     async resetPassword(email) {
@@ -87,6 +88,8 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         throw new Error(error.response?.data?.error || 'Registration failed')
       }
+=======
+>>>>>>> e8d7a34 (Implement authentication flow with login page and API integration)
     }
   }
 })
