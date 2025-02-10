@@ -11,11 +11,16 @@ const publicPaths = [
   '/auth/login',
   '/auth/forgot-password',
 <<<<<<< HEAD
+<<<<<<< HEAD
   '/auth/reset-password',
   '/auth/reset-password/'
 =======
   '/auth/reset-password'
 >>>>>>> 2549301 (Add Axios request interceptor for token management and create Quasar Notify boot file)
+=======
+  '/auth/reset-password',
+  '/auth/reset-password/'
+>>>>>>> f165cb3 (Change Vue Router mode to 'history' for improved URL handling; update Reset Password page layout and validation logic)
 ]
 
 // Add request interceptor

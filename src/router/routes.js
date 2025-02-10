@@ -31,8 +31,13 @@ const routes = [
         path: 'reset-password',
         name: 'reset-password',
         component: () => import('pages/ResetPasswordPage.vue'),
+<<<<<<< HEAD
         meta: { requiresAuth: false }
 >>>>>>> 725c696 (Enhance authentication flow with password reset functionality and route updates)
+=======
+        meta: { requiresAuth: false },
+        props: route => ({ token: route.query.token })
+>>>>>>> f165cb3 (Change Vue Router mode to 'history' for improved URL handling; update Reset Password page layout and validation logic)
       }
     ]
   },
