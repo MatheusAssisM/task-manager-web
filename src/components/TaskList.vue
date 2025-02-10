@@ -59,6 +59,7 @@ import EditTaskDialog from './EditTaskDialog.vue'
 import { onMounted } from 'vue'
 import { useTasksStore } from 'src/stores/tasks'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useQuasar, Dialog } from 'quasar'
 
 const $q = useQuasar()
@@ -150,8 +151,13 @@ import { useTasksStore } from 'src/stores/tasks'
 =======
 import { useQuasar } from 'quasar'
 >>>>>>> 736c6ff (Implement task deletion functionality with notifications for success and error handling)
+=======
+import { useQuasar, Dialog } from 'quasar'
+>>>>>>> af3de44 (Add confirmation dialog for task deletion and integrate Dialog plugin)
 
 const $q = useQuasar()
+$q.dialog = Dialog.create
+
 const tasksStore = useTasksStore()
 
 onMounted(async () => {
@@ -171,11 +177,19 @@ const deleteTask = (taskId) => {
 =======
 const deleteTask = async (taskId) => {
   try {
-    await tasksStore.deleteTask(taskId)
-    $q.notify({
-      type: 'positive',
-      message: 'Task deleted successfully!',
-      position: 'top'
+    // Show confirmation dialog
+    $q.dialog({
+      title: 'Confirm Deletion',
+      message: 'Are you sure you want to delete this task?',
+      cancel: true,
+      persistent: true
+    }).onOk(async () => {
+      await tasksStore.deleteTask(taskId)
+      $q.notify({
+        type: 'positive',
+        message: 'Task deleted successfully!',
+        position: 'top'
+      })
     })
   } catch (error) {
     $q.notify({

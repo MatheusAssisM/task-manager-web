@@ -92,10 +92,14 @@ export default defineConfig((/* ctx */) => {
 
       // Quasar plugins
 <<<<<<< HEAD
+<<<<<<< HEAD
       plugins: ['Notify', 'Dialog']
 =======
       plugins: ['Notify']
 >>>>>>> 8ce2a46 (Add Notify plugin to Quasar configuration)
+=======
+      plugins: ['Notify', 'Dialog']
+>>>>>>> af3de44 (Add confirmation dialog for task deletion and integrate Dialog plugin)
     },
 
     // animations: 'all', // --- includes all animations
