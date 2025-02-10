@@ -46,18 +46,32 @@
     />
 =======
         <q-item-section side>
+          <q-btn flat round color="primary" icon="edit" @click="openEditDialog(task)" class="q-mr-sm" />
           <q-btn flat round color="negative" icon="delete" @click="deleteTask(task.id)" />
         </q-item-section>
       </q-item>
     </q-list>
+<<<<<<< HEAD
 >>>>>>> d520633 (Add task management components and layout updates)
+=======
+    
+    <edit-task-dialog
+      v-model="editDialog"
+      :task="selectedTask"
+      @update="handleTaskUpdate"
+    />
+>>>>>>> af52eda (Implement edit task functionality with dialog and update notifications)
   </div>
 </template>
 
 <script setup>
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { ref } from 'vue'
 <<<<<<< HEAD
+=======
+import { ref } from 'vue'
+>>>>>>> af52eda (Implement edit task functionality with dialog and update notifications)
 import EditTaskDialog from './EditTaskDialog.vue'
 import { onMounted } from 'vue'
 import { useTasksStore } from 'src/stores/tasks'

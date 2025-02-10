@@ -32,6 +32,9 @@ export const useTasksStore = defineStore('tasks', {
       }
       return response.data
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> af52eda (Implement edit task functionality with dialog and update notifications)
     },
 
     async updateTask(taskId, updatedTask) {
@@ -47,6 +50,7 @@ export const useTasksStore = defineStore('tasks', {
         this.tasks.splice(taskIndex, 1, updatedTaskData)
       }
       return response.data
+<<<<<<< HEAD
 =======
       const response = await api.get('/tasks/user/tasks')
       this.tasks = response.data
@@ -61,6 +65,8 @@ export const useTasksStore = defineStore('tasks', {
 >>>>>>> 736c6ff (Implement task deletion functionality with notifications for success and error handling)
 =======
 >>>>>>> 8815cdd (Implement task status toggle functionality with notifications for success and error handling)
+=======
+>>>>>>> af52eda (Implement edit task functionality with dialog and update notifications)
     }
   }
 })
