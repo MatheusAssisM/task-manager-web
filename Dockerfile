@@ -2,7 +2,10 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy entire project first
+# Copy env file first
+COPY .env .env
+
+# Copy entire project
 COPY . .
 
 # Install dependencies
