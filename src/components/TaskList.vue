@@ -26,9 +26,11 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useTasksStore } from 'src/stores/tasks'
-import { useQuasar } from 'quasar'
+import { useQuasar, Dialog } from 'quasar'
 
 const $q = useQuasar()
+$q.dialog = Dialog.create
+
 const tasksStore = useTasksStore()
 
 onMounted(async () => {
@@ -42,11 +44,19 @@ const toggleTask = (task) => {
 
 const deleteTask = async (taskId) => {
   try {
-    await tasksStore.deleteTask(taskId)
-    $q.notify({
-      type: 'positive',
-      message: 'Task deleted successfully!',
-      position: 'top'
+    // Show confirmation dialog
+    $q.dialog({
+      title: 'Confirm Deletion',
+      message: 'Are you sure you want to delete this task?',
+      cancel: true,
+      persistent: true
+    }).onOk(async () => {
+      await tasksStore.deleteTask(taskId)
+      $q.notify({
+        type: 'positive',
+        message: 'Task deleted successfully!',
+        position: 'top'
+      })
     })
   } catch (error) {
     $q.notify({
