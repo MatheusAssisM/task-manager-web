@@ -91,7 +91,11 @@ export default defineConfig((/* ctx */) => {
       // directives: [],
 
       // Quasar plugins
+<<<<<<< HEAD
       plugins: ['Notify', 'Dialog']
+=======
+      plugins: ['Notify']
+>>>>>>> 8ce2a46 (Add Notify plugin to Quasar configuration)
     },
 
     // animations: 'all', // --- includes all animations
