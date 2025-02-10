@@ -65,6 +65,7 @@
             to="/register"
           />
         </div>
+<<<<<<< HEAD
       </q-card-section>
     </q-card>
   </q-page>
@@ -145,6 +146,8 @@
           label="Forgot Password?"
           @click="showResetPassword = true"
         />
+=======
+>>>>>>> 374c003 (Add registration functionality with form validation and routing)
       </q-card-section>
     </q-card>
   </q-page>

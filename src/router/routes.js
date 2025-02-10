@@ -16,6 +16,9 @@ const routes = [
       },
       {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 374c003 (Add registration functionality with form validation and routing)
         path: 'register',
         name: 'register',
         component: () => import('pages/RegisterPage.vue'),
