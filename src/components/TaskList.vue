@@ -9,6 +9,7 @@
             :model-value="task.completed"
             @update:model-value="toggleTaskStatus(task)"
           />
+<<<<<<< HEAD
 =======
       <q-item v-for="task in tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
 =======
@@ -17,6 +18,8 @@
         <q-item-section side>
           <q-checkbox v-model="task.completed" @update:model-value="toggleTask(task)" />
 >>>>>>> d520633 (Add task management components and layout updates)
+=======
+>>>>>>> 8815cdd (Implement task status toggle functionality with notifications for success and error handling)
         </q-item-section>
 
         <q-item-section>

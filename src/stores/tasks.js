@@ -31,6 +31,7 @@ export const useTasksStore = defineStore('tasks', {
         this.tasks[taskIndex].completed = status
       }
       return response.data
+<<<<<<< HEAD
     },
 
     async updateTask(taskId, updatedTask) {
@@ -58,6 +59,8 @@ export const useTasksStore = defineStore('tasks', {
       await api.delete(`/tasks/${taskId}`)
       this.tasks = this.tasks.filter(task => task.id !== taskId)
 >>>>>>> 736c6ff (Implement task deletion functionality with notifications for success and error handling)
+=======
+>>>>>>> 8815cdd (Implement task status toggle functionality with notifications for success and error handling)
     }
   }
 })
