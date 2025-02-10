@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-header elevated class="bg-primary text-white">
+    <q-header elevated class="bg-primary text-white" v-if="authStore.isAuthenticated">
       <q-toolbar>
         <q-toolbar-title>
           Task Manager
