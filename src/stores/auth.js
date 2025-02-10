@@ -52,6 +52,32 @@ export const useAuthStore = defineStore('auth', {
       } else {
         delete api.defaults.headers.common['Authorization']
       }
+    },
+
+    async resetPassword(email) {
+      try {
+        await api.post('/auth/forgot-password', { email })
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to reset password')
+      }
+    },
+
+    async confirmResetPassword(newPassword, token) {
+      try {
+        const response = await api.post('/auth/reset-password', {
+          new_password: newPassword,
+          token: token
+        })
+
+        const storedToken = localStorage.getItem('token')
+        if (storedToken) {
+          this.setAuthHeader(storedToken)
+        }
+
+        return response.data
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to reset password')
+      }
     }
   }
 })
