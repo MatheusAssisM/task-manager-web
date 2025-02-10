@@ -1,12 +1,18 @@
 <template>
   <div class="task-list">
     <q-list separator>
+<<<<<<< HEAD
       <q-item v-for="task in tasksStore.tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
         <q-item-section side>
           <q-checkbox 
             :model-value="task.completed"
             @update:model-value="toggleTaskStatus(task)"
           />
+=======
+      <q-item v-for="task in tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
+        <q-item-section side>
+          <q-checkbox v-model="task.completed" @update:model-value="toggleTask(task)" />
+>>>>>>> d520633 (Add task management components and layout updates)
         </q-item-section>
 
         <q-item-section>
@@ -18,6 +24,7 @@
           </q-item-label>
         </q-item-section>
 
+<<<<<<< HEAD
         <q-item-section side class="flex items-right">
           <q-btn flat round color="primary" icon="edit" @click="openEditDialog(task)" class="q-mr-sm" />
           <q-btn flat round color="negative" icon="delete" @click="deleteTask(task.id)" class="q-mr-sm" />
@@ -30,11 +37,19 @@
       :task="selectedTask"
       @update="handleTaskUpdate"
     />
+=======
+        <q-item-section side>
+          <q-btn flat round color="negative" icon="delete" @click="deleteTask(task.id)" />
+        </q-item-section>
+      </q-item>
+    </q-list>
+>>>>>>> d520633 (Add task management components and layout updates)
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+<<<<<<< HEAD
 import EditTaskDialog from './EditTaskDialog.vue'
 import { onMounted } from 'vue'
 import { useTasksStore } from 'src/stores/tasks'
@@ -121,5 +136,21 @@ const deleteTask = async (taskId) => {
     })
     console.error('Error deleting task:', error)
   }
+=======
+
+const tasks = ref([
+  { id: 1, title: 'Complete project setup', description: 'Initial project configuration', completed: false },
+  { id: 2, title: 'Add authentication', description: 'Implement user login/logout', completed: true },
+])
+
+const toggleTask = (task) => {
+  // TODO: Implement API call
+  console.log('Toggle task:', task.id)
+}
+
+const deleteTask = (taskId) => {
+  // TODO: Implement API call
+  console.log('Delete task:', taskId)
+>>>>>>> d520633 (Add task management components and layout updates)
 }
 </script>
