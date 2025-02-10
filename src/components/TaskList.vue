@@ -1,7 +1,7 @@
 <template>
   <div class="task-list">
     <q-list separator>
-      <q-item v-for="task in tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
+      <q-item v-for="task in tasksStore.tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
         <q-item-section side>
           <q-checkbox v-model="task.completed" @update:model-value="toggleTask(task)" />
         </q-item-section>
@@ -24,12 +24,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted } from 'vue'
+import { useTasksStore } from 'src/stores/tasks'
 
-const tasks = ref([
-  { id: 1, title: 'Complete project setup', description: 'Initial project configuration', completed: false },
-  { id: 2, title: 'Add authentication', description: 'Implement user login/logout', completed: true },
-])
+const tasksStore = useTasksStore()
+
+onMounted(async () => {
+  await tasksStore.fetchTasks()
+})
 
 const toggleTask = (task) => {
   // TODO: Implement API call
