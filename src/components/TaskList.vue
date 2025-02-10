@@ -19,14 +19,23 @@
         </q-item-section>
 
         <q-item-section side>
+          <q-btn flat round color="primary" icon="edit" @click="openEditDialog(task)" class="q-mr-sm" />
           <q-btn flat round color="negative" icon="delete" @click="deleteTask(task.id)" />
         </q-item-section>
       </q-item>
     </q-list>
+    
+    <edit-task-dialog
+      v-model="editDialog"
+      :task="selectedTask"
+      @update="handleTaskUpdate"
+    />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import EditTaskDialog from './EditTaskDialog.vue'
 import { onMounted } from 'vue'
 import { useTasksStore } from 'src/stores/tasks'
 import { useQuasar, Dialog } from 'quasar'
@@ -35,6 +44,35 @@ const $q = useQuasar()
 $q.dialog = Dialog.create
 
 const tasksStore = useTasksStore()
+
+const editDialog = ref(false)
+const selectedTask = ref(null)
+
+const openEditDialog = (task) => {
+  selectedTask.value = { ...task }  // Create a copy of the task
+  editDialog.value = true
+}
+
+const handleTaskUpdate = async (updatedTask) => {
+  try {
+    await tasksStore.updateTask(selectedTask.value.id, updatedTask)
+    await tasksStore.fetchTasks() // Fetch fresh data after update
+    editDialog.value = false // Close dialog after successful update
+    selectedTask.value = null // Clear selected task
+    $q.notify({
+      type: 'positive',
+      message: 'Task updated successfully!',
+      position: 'top'
+    })
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: 'Error updating task',
+      position: 'top'
+    })
+    console.error('Error updating task:', error)
+  }
+}
 
 onMounted(async () => {
   await tasksStore.fetchTasks()

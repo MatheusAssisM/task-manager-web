@@ -30,6 +30,21 @@ export const useTasksStore = defineStore('tasks', {
         this.tasks[taskIndex].completed = status
       }
       return response.data
+    },
+
+    async updateTask(taskId, updatedTask) {
+      const response = await api.put(`/tasks/${taskId}`, updatedTask)
+      const taskIndex = this.tasks.findIndex(task => task.id === taskId)
+      if (taskIndex !== -1) {
+        // Update the task directly in the array
+        const updatedTaskData = {
+          ...this.tasks[taskIndex],
+          title: response.data.title,
+          description: response.data.description
+        }
+        this.tasks.splice(taskIndex, 1, updatedTaskData)
+      }
+      return response.data
     }
   }
 })
