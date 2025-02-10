@@ -78,6 +78,15 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         throw new Error(error.response?.data?.message || 'Failed to reset password')
       }
+    },
+
+    async register(userData) {
+      try {
+        const response = await api.post('/auth/register', userData)
+        return response.data
+      } catch (error) {
+        throw new Error(error.response?.data?.error || 'Registration failed')
+      }
     }
   }
 })

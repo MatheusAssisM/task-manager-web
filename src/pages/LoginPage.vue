@@ -46,12 +46,20 @@
       </q-card-section>
 
       <q-card-section class="text-center">
-        <q-btn
-          flat
-          color="primary"
-          label="Forgot Password?"
-          @click="showResetPassword = true"
-        />
+        <div class="row q-gutter-sm justify-center">
+          <q-btn
+            flat
+            color="primary"
+            label="Forgot Password?"
+            @click="showResetPassword = true"
+          />
+          <q-btn
+            flat
+            color="primary"
+            label="Register"
+            to="/register"
+          />
+        </div>
       </q-card-section>
     </q-card>
   </q-page>

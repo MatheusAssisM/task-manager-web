@@ -15,6 +15,12 @@ const routes = [
         meta: { requiresAuth: false }
       },
       {
+        path: 'register',
+        name: 'register',
+        component: () => import('pages/RegisterPage.vue'),
+        meta: { requiresAuth: false }
+      },
+      {
         path: 'reset-password',
         name: 'reset-password',
         component: () => import('pages/ResetPasswordPage.vue'),
