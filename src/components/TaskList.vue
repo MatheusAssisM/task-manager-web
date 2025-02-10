@@ -58,6 +58,7 @@ import { ref } from 'vue'
 import EditTaskDialog from './EditTaskDialog.vue'
 import { onMounted } from 'vue'
 import { useTasksStore } from 'src/stores/tasks'
+<<<<<<< HEAD
 import { useQuasar, Dialog } from 'quasar'
 
 const $q = useQuasar()
@@ -146,7 +147,11 @@ const deleteTask = async (taskId) => {
 import { onMounted } from 'vue'
 import { useTasksStore } from 'src/stores/tasks'
 >>>>>>> f09927c (Implement task management with add and fetch functionality, including validation and notifications)
+=======
+import { useQuasar } from 'quasar'
+>>>>>>> 736c6ff (Implement task deletion functionality with notifications for success and error handling)
 
+const $q = useQuasar()
 const tasksStore = useTasksStore()
 
 onMounted(async () => {
@@ -158,9 +163,28 @@ const toggleTask = (task) => {
   console.log('Toggle task:', task.id)
 }
 
+<<<<<<< HEAD
 const deleteTask = (taskId) => {
   // TODO: Implement API call
   console.log('Delete task:', taskId)
 >>>>>>> d520633 (Add task management components and layout updates)
+=======
+const deleteTask = async (taskId) => {
+  try {
+    await tasksStore.deleteTask(taskId)
+    $q.notify({
+      type: 'positive',
+      message: 'Task deleted successfully!',
+      position: 'top'
+    })
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: 'Error deleting task',
+      position: 'top'
+    })
+    console.error('Error deleting task:', error)
+  }
+>>>>>>> 736c6ff (Implement task deletion functionality with notifications for success and error handling)
 }
 </script>

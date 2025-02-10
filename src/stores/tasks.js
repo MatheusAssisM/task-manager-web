@@ -49,7 +49,15 @@ export const useTasksStore = defineStore('tasks', {
 =======
       const response = await api.get('/tasks/user/tasks')
       this.tasks = response.data
+<<<<<<< HEAD
 >>>>>>> f09927c (Implement task management with add and fetch functionality, including validation and notifications)
+=======
+    },
+
+    async deleteTask(taskId) {
+      await api.delete(`/tasks/${taskId}`)
+      this.tasks = this.tasks.filter(task => task.id !== taskId)
+>>>>>>> 736c6ff (Implement task deletion functionality with notifications for success and error handling)
     }
   }
 })
