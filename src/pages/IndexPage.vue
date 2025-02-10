@@ -4,10 +4,14 @@
       <div class="col-12">
         <q-card>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <q-card-section class="row items-center">
 =======
           <q-card-section>
 >>>>>>> d520633 (Add task management components and layout updates)
+=======
+          <q-card-section class="row items-center">
+>>>>>>> bca68bd (Restrict header visibility to authenticated users and redirect unauthenticated access to login)
             <div class="text-h6">My Tasks</div>
           </q-card-section>
 
@@ -22,6 +26,9 @@
 
 <script setup>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bca68bd (Restrict header visibility to authenticated users and redirect unauthenticated access to login)
 import { onBeforeMount } from 'vue'
 import TaskList from 'components/TaskList.vue'
 import { useAuthStore } from 'src/stores/auth'
@@ -35,7 +42,10 @@ onBeforeMount(() => {
     router.replace('/login')
   }
 })
+<<<<<<< HEAD
 =======
 import TaskList from 'components/TaskList.vue'
 >>>>>>> d520633 (Add task management components and layout updates)
+=======
+>>>>>>> bca68bd (Restrict header visibility to authenticated users and redirect unauthenticated access to login)
 </script>

@@ -1,10 +1,14 @@
 <template>
   <q-layout view="hHh LpR fFf">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <q-header elevated class="bg-primary text-white" v-if="authStore.isAuthenticated">
 =======
     <q-header elevated class="bg-primary text-white">
 >>>>>>> d520633 (Add task management components and layout updates)
+=======
+    <q-header elevated class="bg-primary text-white" v-if="authStore.isAuthenticated">
+>>>>>>> bca68bd (Restrict header visibility to authenticated users and redirect unauthenticated access to login)
       <q-toolbar>
         <q-toolbar-title>
           Task Manager
