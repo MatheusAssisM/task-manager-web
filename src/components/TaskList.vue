@@ -3,7 +3,10 @@
     <q-list separator>
       <q-item v-for="task in tasksStore.tasks" :key="task.id" class="q-my-sm" clickable v-ripple>
         <q-item-section side>
-          <q-checkbox v-model="task.completed" @update:model-value="toggleTask(task)" />
+          <q-checkbox 
+            :model-value="task.completed"
+            @update:model-value="toggleTaskStatus(task)"
+          />
         </q-item-section>
 
         <q-item-section>
@@ -37,9 +40,23 @@ onMounted(async () => {
   await tasksStore.fetchTasks()
 })
 
-const toggleTask = (task) => {
-  // TODO: Implement API call
-  console.log('Toggle task:', task.id)
+const toggleTaskStatus = async (task) => {
+  try {
+    const newStatus = !task.completed
+    await tasksStore.updateTaskStatus(task.id, newStatus)
+    $q.notify({
+      type: 'positive',
+      message: 'Task status updated!',
+      position: 'top'
+    })
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: 'Error updating task status',
+      position: 'top'
+    })
+    console.error('Error updating task status:', error)
+  }
 }
 
 const deleteTask = async (taskId) => {

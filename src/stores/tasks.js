@@ -21,6 +21,15 @@ export const useTasksStore = defineStore('tasks', {
     async deleteTask(taskId) {
       await api.delete(`/tasks/${taskId}`)
       this.tasks = this.tasks.filter(task => task.id !== taskId)
+    },
+
+    async updateTaskStatus(taskId, status) {
+      const response = await api.patch(`/tasks/${taskId}/status`, { completed: status })
+      const taskIndex = this.tasks.findIndex(task => task.id === taskId)
+      if (taskIndex !== -1) {
+        this.tasks[taskIndex].completed = status
+      }
+      return response.data
     }
   }
 })
