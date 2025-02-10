@@ -18,9 +18,9 @@
           </q-item-label>
         </q-item-section>
 
-        <q-item-section side>
+        <q-item-section side class="flex items-right">
           <q-btn flat round color="primary" icon="edit" @click="openEditDialog(task)" class="q-mr-sm" />
-          <q-btn flat round color="negative" icon="delete" @click="deleteTask(task.id)" />
+          <q-btn flat round color="negative" icon="delete" @click="deleteTask(task.id)" class="q-mr-sm" />
         </q-item-section>
       </q-item>
     </q-list>
