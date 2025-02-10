@@ -14,7 +14,7 @@ export const useTasksStore = defineStore('tasks', {
     },
 
     async fetchTasks() {
-      const response = await api.get('/tasks/user/tasks')
+      const response = await api.get('/tasks')
       this.tasks = response.data
     },
 
