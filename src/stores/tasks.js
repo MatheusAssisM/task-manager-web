@@ -15,6 +15,9 @@ export const useTasksStore = defineStore('tasks', {
 
     async fetchTasks() {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b6e5fae (Refactor fetchTasks method to retrieve tasks from the updated API endpoint)
       const response = await api.get('/tasks')
       this.tasks = response.data
     },
