@@ -83,6 +83,9 @@ docker-compose logs -f
 
 The application will be available at `http://localhost:9000`
 
+### Reset password
+After ask to reset a password, you can go at mailhog `http://localhost:8025` and get the emails.
+
 ### Production Build
 
 1. Using NPM/Yarn:
