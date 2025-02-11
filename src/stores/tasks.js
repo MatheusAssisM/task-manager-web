@@ -14,10 +14,6 @@ export const useTasksStore = defineStore('tasks', {
     },
 
     async fetchTasks() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b6e5fae (Refactor fetchTasks method to retrieve tasks from the updated API endpoint)
       const response = await api.get('/tasks')
       this.tasks = response.data
     },
@@ -34,10 +30,6 @@ export const useTasksStore = defineStore('tasks', {
         this.tasks[taskIndex].completed = status
       }
       return response.data
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> af52eda (Implement edit task functionality with dialog and update notifications)
     },
 
     async updateTask(taskId, updatedTask) {
@@ -53,23 +45,6 @@ export const useTasksStore = defineStore('tasks', {
         this.tasks.splice(taskIndex, 1, updatedTaskData)
       }
       return response.data
-<<<<<<< HEAD
-=======
-      const response = await api.get('/tasks/user/tasks')
-      this.tasks = response.data
-<<<<<<< HEAD
->>>>>>> f09927c (Implement task management with add and fetch functionality, including validation and notifications)
-=======
-    },
-
-    async deleteTask(taskId) {
-      await api.delete(`/tasks/${taskId}`)
-      this.tasks = this.tasks.filter(task => task.id !== taskId)
->>>>>>> 736c6ff (Implement task deletion functionality with notifications for success and error handling)
-=======
->>>>>>> 8815cdd (Implement task status toggle functionality with notifications for success and error handling)
-=======
->>>>>>> af52eda (Implement edit task functionality with dialog and update notifications)
     }
   }
 })

@@ -52,10 +52,6 @@ export const useAuthStore = defineStore('auth', {
       } else {
         delete api.defaults.headers.common['Authorization']
       }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 725c696 (Enhance authentication flow with password reset functionality and route updates)
     },
 
     async resetPassword(email) {
@@ -82,10 +78,6 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         throw new Error(error.response?.data?.message || 'Failed to reset password')
       }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 374c003 (Add registration functionality with form validation and routing)
     },
 
     async register(userData) {
@@ -95,13 +87,6 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         throw new Error(error.response?.data?.error || 'Registration failed')
       }
-<<<<<<< HEAD
-=======
->>>>>>> e8d7a34 (Implement authentication flow with login page and API integration)
-=======
->>>>>>> 725c696 (Enhance authentication flow with password reset functionality and route updates)
-=======
->>>>>>> 374c003 (Add registration functionality with form validation and routing)
     }
   }
 })

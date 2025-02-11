@@ -15,10 +15,6 @@ const routes = [
         meta: { requiresAuth: false }
       },
       {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 374c003 (Add registration functionality with form validation and routing)
         path: 'register',
         name: 'register',
         component: () => import('pages/RegisterPage.vue'),
@@ -30,31 +26,10 @@ const routes = [
         component: () => import('pages/ResetPasswordPage.vue'),
         meta: { requiresAuth: false },
         props: route => ({ token: route.query.token })
-=======
-        path: 'reset-password',
-        name: 'reset-password',
-        component: () => import('pages/ResetPasswordPage.vue'),
-<<<<<<< HEAD
-        meta: { requiresAuth: false }
->>>>>>> 725c696 (Enhance authentication flow with password reset functionality and route updates)
-=======
-        meta: { requiresAuth: false },
-        props: route => ({ token: route.query.token })
->>>>>>> f165cb3 (Change Vue Router mode to 'history' for improved URL handling; update Reset Password page layout and validation logic)
       }
     ]
   },
-<<<<<<< HEAD
-=======
   {
-<<<<<<< HEAD
-    path: '/login',
-    component: () => import('pages/LoginPage.vue')
-  },
->>>>>>> e8d7a34 (Implement authentication flow with login page and API integration)
-  {
-=======
->>>>>>> 725c696 (Enhance authentication flow with password reset functionality and route updates)
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
   }
