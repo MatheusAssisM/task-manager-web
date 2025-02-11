@@ -34,6 +34,16 @@ api.interceptors.response.use(
     const originalRequest = error.config
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+      // Skip refresh token logic for login attempts
+      if (originalRequest.url.includes('/auth/login')) {
+        return Promise.reject(error)
+      }
+
+      // Skip refresh token logic when there's no access token
+      if (!localStorage.getItem('access_token')) {
+        return Promise.reject(error)
+      }
+
       if (originalRequest.url.includes('/auth/refresh')) {
         // If refresh token request fails, logout user
         localStorage.removeItem('access_token')

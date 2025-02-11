@@ -95,21 +95,21 @@ const onSubmit = async () => {
       password: password.value
     })
 
-    if (authStore.isAuthenticated) {
-      Notify.create({
-        type: 'positive',
-        message: 'Login successful'
-      })
-      await router.replace('/')
-    }
+    Notify.create({
+      type: 'positive',
+      message: 'Login successful'
+    })
+    await router.replace('/')
   } catch (error) {
     let errorMessage = 'Invalid credentials'
     
-    if (!error.response) {
+    if (error.response?.status === 401) {
+      errorMessage = 'Invalid email or password'
+    } else if (error.response?.status === 503) {
       errorMessage = 'Service is unavailable. Please try again later.'
-    } else if (error.response.status === 500) {
+    } else if (error.response?.status === 500) {
       errorMessage = 'Server error. Please try again later.'
-    } else if (error.response.data?.message) {
+    } else if (error.response?.data?.message) {
       errorMessage = error.response.data.message
     }
 
@@ -117,7 +117,7 @@ const onSubmit = async () => {
       type: 'negative',
       message: errorMessage,
       position: 'top',
-      timeout: 3000
+      timeout: 2500
     })
   } finally {
     loading.value = false

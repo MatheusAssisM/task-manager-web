@@ -35,7 +35,7 @@ export const useAuthStore = defineStore('auth', {
         if (!error.response) {
           throw new Error('Service is unavailable. Please try again later.')
         }
-        throw new Error(error.response?.data?.message || 'Authentication failed')
+        throw error
       }
     },
 
