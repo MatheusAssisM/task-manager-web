@@ -6,6 +6,7 @@
           Task Manager
         </q-toolbar-title>
         <q-btn flat round dense icon="add" @click="showAddTask = true" />
+        <q-btn flat round dense :icon="darkMode ? 'dark_mode' : 'light_mode'" @click="toggleDarkMode" />
         <q-btn flat round dense icon="logout" @click="logout" />
       </q-toolbar>
     </q-header>
@@ -43,23 +44,34 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from 'src/stores/auth'
 import { useTasksStore } from 'src/stores/tasks'
-import { useQuasar } from 'quasar'
+import { useQuasar, Dark } from 'quasar'
 
 const $q = useQuasar()
 const router = useRouter()
 const authStore = useAuthStore()
 const tasksStore = useTasksStore()
 const showAddTask = ref(false)
+const darkMode = ref(Dark.isActive)
+
 const newTask = ref({
   title: '',
   description: ''
 })
 const titleRef = ref(null)
 const descRef = ref(null)
+
+onMounted(() => {
+  darkMode.value = Dark.isActive
+})
+
+const toggleDarkMode = () => {
+  Dark.toggle()
+  darkMode.value = Dark.isActive
+}
 
 const logout = async () => {
   authStore.logout()
