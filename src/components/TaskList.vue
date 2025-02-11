@@ -49,16 +49,31 @@ const editDialog = ref(false)
 const selectedTask = ref(null)
 
 const openEditDialog = (task) => {
-  selectedTask.value = { ...task }  // Create a copy of the task
+  selectedTask.value = { ...task }
   editDialog.value = true
 }
 
 const handleTaskUpdate = async (updatedTask) => {
   try {
-    await tasksStore.updateTask(selectedTask.value.id, updatedTask)
-    await tasksStore.fetchTasks() // Fetch fresh data after update
-    editDialog.value = false // Close dialog after successful update
-    selectedTask.value = null // Clear selected task
+    if (!updatedTask.title?.trim()) {
+      $q.notify({
+        type: 'warning',
+        message: 'Task title is required',
+        position: 'top'
+      })
+      return
+    }
+
+    const taskToUpdate = {
+      ...updatedTask,
+      title: updatedTask.title.trim(),
+      description: updatedTask.description?.trim() || ''
+    }
+
+    await tasksStore.updateTask(selectedTask.value.id, taskToUpdate)
+    await tasksStore.fetchTasks()
+    editDialog.value = false
+    selectedTask.value = null
     $q.notify({
       type: 'positive',
       message: 'Task updated successfully!',
