@@ -5,7 +5,19 @@
         <q-toolbar-title>
           Task Manager
         </q-toolbar-title>
-        <q-btn flat round dense icon="add" @click="showAddTask = true" />
+        <q-btn
+          flat
+          color="white"
+          icon="add_task"
+          class="q-mr-sm create-task-btn"
+          @click="showAddTask = true"
+          :tooltip-delay="600"
+        >
+          <q-tooltip>
+            Create New Task (⌘/Ctrl + N)
+          </q-tooltip>
+          <span class="q-ml-sm gt-xs">New Task</span>
+        </q-btn>
         <q-btn flat round dense :icon="darkMode ? 'dark_mode' : 'light_mode'" @click="toggleDarkMode" />
         <q-btn flat no-caps class="q-mr-sm">
           <q-icon name="person" class="q-mr-xs" />
@@ -53,6 +65,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from 'src/stores/auth'
 import { useTasksStore } from 'src/stores/tasks'
 import { useQuasar, Dark } from 'quasar'
+import { onKeyStroke } from '@vueuse/core'
 
 const $q = useQuasar()
 const router = useRouter()
@@ -122,4 +135,29 @@ const addTask = async () => {
     console.error('Error adding task:', error)
   }
 }
+
+// Add keyboard shortcut for new task
+onKeyStroke(['n'], (e) => {
+  if ((e.metaKey || e.ctrlKey) && authStore.isAuthenticated) {
+    e.preventDefault()
+    showAddTask.value = true
+  }
+})
 </script>
+
+<style scoped>
+.create-task-btn {
+  transition: transform 0.2s ease;
+}
+
+.create-task-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Make sure the button text appears only on larger screens */
+@media (max-width: 599px) {
+  .gt-xs {
+    display: none;
+  }
+}
+</style>
