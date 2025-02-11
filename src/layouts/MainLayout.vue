@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from 'src/stores/auth'
 import { useTasksStore } from 'src/stores/tasks'
@@ -60,6 +60,7 @@ const authStore = useAuthStore()
 const tasksStore = useTasksStore()
 const showAddTask = ref(false)
 const darkMode = ref(Dark.isActive)
+let tokenCheckInterval
 
 const newTask = ref({
   title: '',
@@ -70,6 +71,18 @@ const descRef = ref(null)
 
 onMounted(() => {
   darkMode.value = Dark.isActive
+  // Check tokens every 15 seconds
+  tokenCheckInterval = setInterval(() => {
+    if (authStore.isAuthenticated) {
+      authStore.checkAndRefreshTokens()
+    }
+  }, 15000)
+})
+
+onBeforeUnmount(() => {
+  if (tokenCheckInterval) {
+    clearInterval(tokenCheckInterval)
+  }
 })
 
 const toggleDarkMode = () => {

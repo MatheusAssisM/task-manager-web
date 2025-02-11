@@ -5,17 +5,22 @@ const api = axios.create({ baseURL: process.env.API_URL || 'http://localhost:800
 
 const publicPaths = [
   '/auth/login',
+  '/auth/register',
   '/auth/forgot-password',
   '/auth/reset-password',
-  '/auth/reset-password/'
+  '/auth/reset-password/',
+  '/auth/refresh'
 ]
+
+let isRefreshing = false
+let failedRequests = []
 
 // Add request interceptor
 api.interceptors.request.use(
   config => {
     const isPublicPath = publicPaths.some(path => config.url?.includes(path))
-    if (!isPublicPath && localStorage.getItem('token')) {
-      config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    if (!isPublicPath && localStorage.getItem('access_token')) {
+      config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`
     }
     return config
   },
@@ -25,10 +30,56 @@ api.interceptors.request.use(
 // Add response interceptor
 api.interceptors.response.use(
   response => response,
-  error => {
-    if (error.response?.status === 401 && !publicPaths.some(path => error.config.url?.includes(path))) {
-      localStorage.removeItem('token')
-      window.location.href = '/login'
+  async error => {
+    const originalRequest = error.config
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (originalRequest.url.includes('/auth/refresh')) {
+        // If refresh token request fails, logout user
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        window.location.href = '/login'
+        return Promise.reject(error)
+      }
+
+      if (isRefreshing) {
+        return new Promise(resolve => {
+          failedRequests.push(() => {
+            resolve(api(originalRequest))
+          })
+        })
+      }
+
+      originalRequest._retry = true
+      isRefreshing = true
+
+      try {
+        const refreshToken = localStorage.getItem('refresh_token')
+        if (!refreshToken) {
+          throw new Error('No refresh token available')
+        }
+
+        const response = await api.post('/auth/refresh', {
+          refresh_token: refreshToken
+        })
+
+        const { access_token, refresh_token } = response.data
+        localStorage.setItem('access_token', access_token)
+        localStorage.setItem('refresh_token', refresh_token)
+
+        originalRequest.headers.Authorization = `Bearer ${access_token}`
+        failedRequests.forEach(callback => callback())
+        failedRequests = []
+
+        return api(originalRequest)
+      } catch (refreshError) {
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        window.location.href = '/login'
+        return Promise.reject(refreshError)
+      } finally {
+        isRefreshing = false
+      }
     }
     return Promise.reject(error)
   }

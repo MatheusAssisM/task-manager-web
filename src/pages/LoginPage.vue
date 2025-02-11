@@ -103,11 +103,21 @@ const onSubmit = async () => {
       await router.replace('/')
     }
   } catch (error) {
-    console.error('Login failed:', error)
+    let errorMessage = 'Invalid credentials'
+    
+    if (!error.response) {
+      errorMessage = 'Service is unavailable. Please try again later.'
+    } else if (error.response.status === 500) {
+      errorMessage = 'Server error. Please try again later.'
+    } else if (error.response.data?.message) {
+      errorMessage = error.response.data.message
+    }
+
     Notify.create({
       type: 'negative',
-      message: error.message || 'Invalid credentials',
-      position: 'top'
+      message: errorMessage,
+      position: 'top',
+      timeout: 3000
     })
   } finally {
     loading.value = false
