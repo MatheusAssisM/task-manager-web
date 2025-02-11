@@ -8,43 +8,61 @@ export const useTasksStore = defineStore('tasks', {
   
   actions: {
     async addTask(task) {
-      const response = await api.post('/tasks', task)
-      this.tasks.push(response.data)
-      return response.data
+      try {
+        const response = await api.post('/tasks', task)
+        await this.fetchTasks() // Refresh tasks after adding
+        return response.data
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to create task')
+      }
     },
 
     async fetchTasks() {
-      const response = await api.get('/tasks')
-      this.tasks = response.data
+      try {
+        const response = await api.get('/tasks')
+        this.tasks = response.data.tasks || [] // API returns { tasks: [] }
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to fetch tasks')
+      }
     },
 
     async deleteTask(taskId) {
-      await api.delete(`/tasks/${taskId}`)
-      this.tasks = this.tasks.filter(task => task.id !== taskId)
+      try {
+        await api.delete(`/tasks/${taskId}`)
+        this.tasks = this.tasks.filter(task => task.id !== taskId)
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to delete task')
+      }
     },
 
     async updateTaskStatus(taskId, status) {
-      const response = await api.patch(`/tasks/${taskId}/status`, { completed: status })
-      const taskIndex = this.tasks.findIndex(task => task.id === taskId)
-      if (taskIndex !== -1) {
-        this.tasks[taskIndex].completed = status
+      try {
+        const response = await api.patch(`/tasks/${taskId}/status`, { completed: status })
+        const taskIndex = this.tasks.findIndex(task => task.id === taskId)
+        if (taskIndex !== -1) {
+          this.tasks[taskIndex].completed = status
+        }
+        return response.data
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to update task status')
       }
-      return response.data
     },
 
     async updateTask(taskId, updatedTask) {
-      const response = await api.put(`/tasks/${taskId}`, updatedTask)
-      const taskIndex = this.tasks.findIndex(task => task.id === taskId)
-      if (taskIndex !== -1) {
-        // Update the task directly in the array
-        const updatedTaskData = {
-          ...this.tasks[taskIndex],
-          title: response.data.title,
-          description: response.data.description
+      try {
+        const response = await api.put(`/tasks/${taskId}`, updatedTask)
+        const taskIndex = this.tasks.findIndex(task => task.id === taskId)
+        if (taskIndex !== -1) {
+          // Update the task with response data or fallback to sent data
+          this.tasks[taskIndex] = {
+            ...this.tasks[taskIndex],
+            ...updatedTask
+          }
         }
-        this.tasks.splice(taskIndex, 1, updatedTaskData)
+        return response.data
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to update task')
       }
-      return response.data
     }
   }
 })

@@ -15,27 +15,63 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(credentials) {
       try {
-        const response = await api.post('/auth/login', credentials) 
-        if (!response?.data?.access_token) {
-          throw new Error('Invalid credentials')
-        }
+        const response = await api.post('/auth/login', credentials)
+        const { access_token, user } = response.data
         
-        this.token = response.data.access_token
-        this.user = response.data.user
+        this.token = access_token
+        this.user = user
         localStorage.setItem('token', this.token)
         this.setAuthHeader(this.token)
         
         return response.data
       } catch (error) {
-        throw new Error(error.response?.data?.message || 'Login failed')
+        throw new Error(error.response?.data?.message || 'Invalid credentials')
       }
     },
 
-    logout() {
-      this.user = null
-      this.token = null
-      localStorage.removeItem('token')
-      this.setAuthHeader(null)
+    async logout() {
+      try {
+        // Call the logout endpoint before clearing local state
+        await api.post('/auth/logout')
+      } catch (error) {
+        console.error('Logout error:', error)
+      } finally {
+        // Clear local state even if the API call fails
+        this.user = null
+        this.token = null
+        localStorage.removeItem('token')
+        this.setAuthHeader(null)
+      }
+    },
+
+    async register(userData) {
+      try {
+        const response = await api.post('/auth/register', userData)
+        return response.data
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Registration failed')
+      }
+    },
+
+    async resetPassword(email) {
+      try {
+        const response = await api.post('/auth/forgot-password', { email })
+        return response.data
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to send reset password email')
+      }
+    },
+
+    async confirmResetPassword(new_password, token) {
+      try {
+        const response = await api.post('/auth/reset-password', {
+          token,
+          new_password
+        })
+        return response.data
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'Failed to reset password')
+      }
     },
 
     initializeAuth() {
@@ -51,41 +87,6 @@ export const useAuthStore = defineStore('auth', {
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`
       } else {
         delete api.defaults.headers.common['Authorization']
-      }
-    },
-
-    async resetPassword(email) {
-      try {
-        await api.post('/auth/forgot-password', { email })
-      } catch (error) {
-        throw new Error(error.response?.data?.message || 'Failed to reset password')
-      }
-    },
-
-    async confirmResetPassword(newPassword, token) {
-      try {
-        const response = await api.post('/auth/reset-password', {
-          new_password: newPassword,
-          token: token
-        })
-
-        const storedToken = localStorage.getItem('token')
-        if (storedToken) {
-          this.setAuthHeader(storedToken)
-        }
-
-        return response.data
-      } catch (error) {
-        throw new Error(error.response?.data?.message || 'Failed to reset password')
-      }
-    },
-
-    async register(userData) {
-      try {
-        const response = await api.post('/auth/register', userData)
-        return response.data
-      } catch (error) {
-        throw new Error(error.response?.data?.error || 'Registration failed')
       }
     }
   }
