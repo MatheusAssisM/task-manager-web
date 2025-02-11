@@ -7,6 +7,10 @@
         </q-toolbar-title>
         <q-btn flat round dense icon="add" @click="showAddTask = true" />
         <q-btn flat round dense :icon="darkMode ? 'dark_mode' : 'light_mode'" @click="toggleDarkMode" />
+        <q-btn flat no-caps class="q-mr-sm">
+          <q-icon name="person" class="q-mr-xs" />
+          {{ authStore.user?.username }}
+        </q-btn>
         <q-btn flat round dense icon="logout" @click="logout" />
       </q-toolbar>
     </q-header>
