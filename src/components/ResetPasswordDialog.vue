@@ -52,6 +52,7 @@ const onSubmit = async () => {
       type: 'positive',
       message: 'Password reset instructions sent to your email'
     })
+    window.open('http://localhost:8025', '_blank')
     showing.value = false
     email.value = ''
   } catch (error) {
